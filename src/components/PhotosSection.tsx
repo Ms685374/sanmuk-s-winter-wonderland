@@ -28,17 +28,17 @@ const initialPhotos: Photo[] = [{
 }, {
   id: '4',
   src: '',
-  caption: 'Add Photo',
+  caption: 'photo1',
   isPlaceholder: true
 }, {
   id: '5',
   src: '',
-  caption: 'Add Photo',
+  caption: 'photo2',
   isPlaceholder: true
 }, {
   id: '6',
   src: '',
-  caption: 'Add Photo',
+  caption: 'photo3',
   isPlaceholder: true
 }];
 const PhotosSection = () => {
