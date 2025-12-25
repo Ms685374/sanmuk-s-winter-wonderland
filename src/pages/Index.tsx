@@ -7,7 +7,7 @@ import PhotosSection from '@/components/PhotosSection';
 import GiftsSection from '@/components/GiftsSection';
 import Footer from '@/components/Footer';
 import Snowfall from '@/components/Snowfall';
-import FloatingStickers from '@/components/FloatingStickers';
+import MusicPlayer from '@/components/MusicPlayer';
 
 const Index = () => {
   return (
@@ -17,10 +17,10 @@ const Index = () => {
         <meta name="description" content="A magical Christmas journey of Zubi & Zuro - A digital love letter celebrating our love story." />
       </Helmet>
       
-      <div className="min-h-screen bg-background relative overflow-x-hidden">
+      <div className="min-h-screen bg-background relative overflow-x-hidden noise-overlay">
         <Snowfall />
-        <FloatingStickers />
         <Navigation />
+        <MusicPlayer />
         <main>
           <HeroSection />
           <AboutSection />
