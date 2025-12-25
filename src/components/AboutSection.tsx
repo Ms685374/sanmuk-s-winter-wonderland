@@ -1,149 +1,138 @@
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Heart, Star, Sparkles } from 'lucide-react';
-import zuroSticker from '@/assets/zuro-sticker.png';
-import zubiSticker from '@/assets/zubi-sticker.png';
+import couple3d from '@/assets/couple-3d.png';
 
 const AboutSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2 }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } }
+  };
+
   return (
-    <section id="about" className="py-24 px-4 relative overflow-hidden" ref={ref}>
-      {/* Background decoration */}
+    <section id="about" className="py-32 px-6 relative overflow-hidden" ref={ref}>
+      {/* Subtle background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-secondary/30 to-background" />
       
-      <div className="max-w-6xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <span className="inline-flex items-center gap-2 text-accent font-medium text-sm mb-4">
-            <Star className="w-4 h-4 fill-accent" />
-            Our Story
-            <Star className="w-4 h-4 fill-accent" />
-          </span>
-          <h2 className="section-title">About Us</h2>
+      {/* Floating decorative elements */}
+      <div className="floating-orb w-80 h-80 bg-primary/10 -top-20 right-0" />
+      <div className="floating-orb w-60 h-60 bg-accent/10 bottom-20 -left-20" />
+
+      <motion.div 
+        className="max-w-6xl mx-auto relative z-10"
+        variants={containerVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+      >
+        {/* Section header */}
+        <motion.div variants={itemVariants} className="text-center mb-20">
+          <span className="section-subtitle mb-4 block">Our Story</span>
+          <h2 className="section-title">Two Souls,<br/><span className="text-gradient">One Heart</span></h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-16">
-          {/* Zuro Card */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="glass-card rounded-3xl p-8 relative overflow-hidden group"
-          >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full blur-3xl" />
-            
-            <motion.img
-              src={zuroSticker}
-              alt="Zuro"
-              className="w-32 h-32 mx-auto mb-6 drop-shadow-lg"
-              whileHover={{ scale: 1.1, rotate: 5 }}
-              transition={{ type: 'spring' }}
-            />
-            
-            <h3 className="text-2xl font-display font-bold text-center mb-2 text-foreground">
-              Zuro
-            </h3>
-            <p className="text-primary font-medium text-center mb-4">
-              (Mukesh)
-            </p>
-            <p className="text-muted-foreground text-center leading-relaxed">
-              The one who created this magical paradise for his queen. 
-              A hopeless romantic with endless love for his Zubi. 
-              Always making her smile and creating beautiful memories together.
-            </p>
-            
-            <motion.div
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="absolute bottom-4 right-4"
-            >
-              <Heart className="w-6 h-6 fill-primary text-primary" />
-            </motion.div>
+        {/* Content grid */}
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Left: Image composition */}
+          <motion.div variants={itemVariants} className="relative">
+            <div className="relative aspect-square max-w-md mx-auto">
+              {/* Decorative circle */}
+              <motion.div 
+                className="absolute inset-0 rounded-full border border-primary/20"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+              />
+              <motion.div 
+                className="absolute inset-4 rounded-full border border-accent/20"
+                animate={{ rotate: -360 }}
+                transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+              />
+              
+              {/* Main image */}
+              <motion.div
+                className="absolute inset-8 glass rounded-full flex items-center justify-center overflow-hidden"
+                whileHover={{ scale: 1.02 }}
+              >
+                <img 
+                  src={couple3d} 
+                  alt="Zubi & Zuro" 
+                  className="w-3/4 h-auto object-contain animate-float-gentle"
+                />
+              </motion.div>
+
+              {/* Floating labels */}
+              <motion.div 
+                className="absolute -left-4 top-1/4 glass px-4 py-2 rounded-full"
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
+              >
+                <span className="text-sm font-medium text-foreground">Zuro 💙</span>
+              </motion.div>
+              <motion.div 
+                className="absolute -right-4 top-2/3 glass px-4 py-2 rounded-full"
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 3, repeat: Infinity }}
+              >
+                <span className="text-sm font-medium text-foreground">Zubi 💗</span>
+              </motion.div>
+            </div>
           </motion.div>
 
-          {/* Zubi Card */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="glass-card rounded-3xl p-8 relative overflow-hidden group"
-          >
-            <div className="absolute top-0 left-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl" />
-            
-            <motion.img
-              src={zubiSticker}
-              alt="Zubi"
-              className="w-32 h-32 mx-auto mb-6 drop-shadow-lg"
-              whileHover={{ scale: 1.1, rotate: -5 }}
-              transition={{ type: 'spring' }}
-            />
-            
-            <h3 className="text-2xl font-display font-bold text-center mb-2 text-foreground">
-              Zubi
-            </h3>
-            <p className="text-primary font-medium text-center mb-4">
-              (Sanjana)
-            </p>
-            <p className="text-muted-foreground text-center leading-relaxed">
-              The princess of this paradise, the one who lights up Zuro's world. 
-              Sweet, adorable, and absolutely perfect in every way. 
-              The reason behind every smile and every heartbeat.
-            </p>
-            
-            <motion.div
-              animate={{ rotate: [0, 360] }}
-              transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
-              className="absolute bottom-4 left-4"
+          {/* Right: Content */}
+          <motion.div variants={itemVariants} className="space-y-8">
+            {/* Zuro */}
+            <div className="card-glass">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white text-xl font-display font-bold shrink-0">
+                  Z
+                </div>
+                <div>
+                  <h3 className="text-2xl font-display font-semibold text-foreground mb-1">Zuro</h3>
+                  <p className="text-sm text-primary font-medium mb-3">Mukesh</p>
+                  <p className="text-muted-foreground leading-relaxed">
+                    The one who created this digital love letter. A hopeless romantic 
+                    who believes in forever. Making every moment special for his queen.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Zubi */}
+            <div className="card-glass">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-pink-400 to-rose-500 flex items-center justify-center text-white text-xl font-display font-bold shrink-0">
+                  Z
+                </div>
+                <div>
+                  <h3 className="text-2xl font-display font-semibold text-foreground mb-1">Zubi</h3>
+                  <p className="text-sm text-primary font-medium mb-3">Sanjana</p>
+                  <p className="text-muted-foreground leading-relaxed">
+                    The princess of this paradise, the light of Zuro's world. 
+                    Sweet, adorable, and absolutely perfect in every way.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Quote */}
+            <motion.blockquote 
+              className="border-l-2 border-primary/50 pl-6 italic text-muted-foreground"
+              variants={itemVariants}
             >
-              <Sparkles className="w-6 h-6 text-accent" />
-            </motion.div>
+              "In you, I found my forever. In us, I found my home."
+            </motion.blockquote>
           </motion.div>
         </div>
-
-        {/* Together section */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="mt-16 text-center"
-        >
-          <div className="glass-card rounded-3xl p-8 max-w-2xl mx-auto">
-            <div className="flex justify-center items-center gap-4 mb-6">
-              <motion.img
-                src={zuroSticker}
-                alt="Zuro"
-                className="w-16 h-16"
-                animate={{ x: [0, 10, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-              <motion.div
-                animate={{ scale: [1, 1.3, 1] }}
-                transition={{ duration: 1, repeat: Infinity }}
-              >
-                <Heart className="w-10 h-10 fill-primary text-primary" />
-              </motion.div>
-              <motion.img
-                src={zubiSticker}
-                alt="Zubi"
-                className="w-16 h-16"
-                animate={{ x: [0, -10, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              />
-            </div>
-            <p className="text-lg text-muted-foreground italic font-body">
-              "Two souls, one heart, infinite love. This Christmas, we celebrate not just the season, 
-              but the beautiful journey of us together."
-            </p>
-          </div>
-        </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 };

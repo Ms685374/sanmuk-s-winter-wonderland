@@ -1,101 +1,109 @@
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Heart, Star, Calendar, MessageCircleHeart, Sparkles, Gift } from 'lucide-react';
+import { Heart, MessageCircle, Sparkles, Star, Gift } from 'lucide-react';
 
-const journeyMilestones = [
+const milestones = [
   {
-    icon: MessageCircleHeart,
+    icon: MessageCircle,
     title: 'First Hello',
-    description: 'The magical moment when Zuro first talked to Zubi. Little did they know, this simple hello would change their lives forever.',
-    color: 'bg-pink-500',
+    date: 'The Beginning',
+    description: 'A simple hello that changed everything. Two strangers became two hearts beating as one.',
   },
   {
     icon: Heart,
-    title: 'Falling in Love',
-    description: 'Every conversation became longer, every moment more precious. Two hearts beating as one, falling deeper in love each day.',
-    color: 'bg-red-500',
+    title: 'Falling Deep',
+    date: 'Love Blooms',
+    description: 'Every conversation longer, every moment precious. Love found its way naturally.',
   },
   {
     icon: Star,
     title: 'Special Moments',
-    description: 'From silly nicknames to late-night calls, from inside jokes to shared dreams. Creating a universe of their own.',
-    color: 'bg-amber-500',
+    date: 'Growing Together',
+    description: 'Inside jokes, late night calls, silly nicknames. Building our own universe together.',
   },
   {
     icon: Sparkles,
-    title: 'Growing Together',
-    description: 'Through ups and downs, laughter and tears, they grew stronger. Supporting each other, becoming each other\'s home.',
-    color: 'bg-purple-500',
+    title: 'Stronger Together',
+    date: 'Through It All',
+    description: 'Ups and downs, laughter and tears. Every storm made us stronger.',
   },
   {
     icon: Gift,
-    title: 'Christmas 2024',
-    description: 'This magical Christmas, Zuro creates this special paradise for his Zubi. A digital love letter that will last forever.',
-    color: 'bg-green-500',
+    title: 'This Christmas',
+    date: '2024',
+    description: 'A digital love letter to my forever. This is just the beginning of our story.',
   },
 ];
 
 const JourneySection = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const isInView = useInView(ref, { once: true, margin: '-50px' });
 
   return (
-    <section id="journey" className="py-24 px-4 relative overflow-hidden bg-secondary/20" ref={ref}>
-      <div className="max-w-4xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
+    <section id="journey" className="py-32 px-6 relative overflow-hidden bg-secondary/30" ref={ref}>
+      {/* Background pattern */}
+      <div className="absolute inset-0 opacity-50">
+        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-border to-transparent" />
+        <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-border to-transparent" />
+      </div>
+
+      <div className="max-w-5xl mx-auto relative z-10">
+        {/* Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-24"
         >
-          <span className="inline-flex items-center gap-2 text-accent font-medium text-sm mb-4">
-            <Calendar className="w-4 h-4" />
-            Our Timeline
-            <Calendar className="w-4 h-4" />
-          </span>
-          <h2 className="section-title">Our Journey</h2>
+          <span className="section-subtitle mb-4 block">Timeline</span>
+          <h2 className="section-title">Our <span className="text-gradient">Journey</span></h2>
         </motion.div>
 
         {/* Timeline */}
         <div className="relative">
-          {/* Line */}
-          <motion.div
-            initial={{ height: 0 }}
-            animate={isInView ? { height: '100%' } : {}}
-            transition={{ duration: 1.5, delay: 0.5 }}
-            className="absolute left-4 md:left-1/2 top-0 w-0.5 bg-gradient-to-b from-primary via-accent to-primary"
+          {/* Center line */}
+          <motion.div 
+            className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-accent to-primary md:-translate-x-1/2"
+            initial={{ scaleY: 0 }}
+            animate={isInView ? { scaleY: 1 } : {}}
+            transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+            style={{ transformOrigin: 'top' }}
           />
 
-          {journeyMilestones.map((milestone, index) => (
+          {/* Milestones */}
+          {milestones.map((milestone, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.3 + index * 0.2 }}
-              className={`relative flex items-center mb-12 ${
+              transition={{ duration: 0.8, delay: 0.2 + index * 0.15 }}
+              className={`relative flex items-center mb-16 last:mb-0 ${
                 index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
               }`}
             >
-              {/* Icon */}
+              {/* Icon node */}
               <motion.div
-                whileHover={{ scale: 1.2, rotate: 360 }}
-                transition={{ type: 'spring' }}
-                className={`absolute left-0 md:left-1/2 md:-translate-x-1/2 w-10 h-10 rounded-full ${milestone.color} flex items-center justify-center shadow-lg z-10`}
+                whileHover={{ scale: 1.2 }}
+                className="absolute left-0 md:left-1/2 md:-translate-x-1/2 w-10 h-10 rounded-full bg-primary flex items-center justify-center shadow-lg z-10 glow-primary"
               >
-                <milestone.icon className="w-5 h-5 text-white" />
+                <milestone.icon className="w-5 h-5 text-primary-foreground" />
               </motion.div>
 
-              {/* Content */}
-              <div className={`ml-16 md:ml-0 md:w-1/2 ${index % 2 === 0 ? 'md:pr-16' : 'md:pl-16'}`}>
+              {/* Content card */}
+              <div className={`ml-16 md:ml-0 md:w-[calc(50%-3rem)] ${
+                index % 2 === 0 ? 'md:pr-0 md:mr-auto' : 'md:pl-0 md:ml-auto'
+              }`}>
                 <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  className="glass-card rounded-2xl p-6"
+                  whileHover={{ y: -5 }}
+                  className="card-glass group"
                 >
-                  <h3 className="text-xl font-display font-bold text-foreground mb-2">
+                  <span className="text-xs uppercase tracking-widest text-accent font-medium mb-2 block">
+                    {milestone.date}
+                  </span>
+                  <h3 className="text-xl md:text-2xl font-display font-semibold text-foreground mb-3">
                     {milestone.title}
                   </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
+                  <p className="text-muted-foreground leading-relaxed">
                     {milestone.description}
                   </p>
                 </motion.div>
