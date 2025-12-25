@@ -82,7 +82,7 @@ const Footer = () => {
             for the love of my life
           </p>
           <p className="text-xs text-muted-foreground/60">
-            © 2024 Sanmuk Paradise. Forever & Always.
+            © 2025 Sanmuk Paradise. Forever & Always.
           </p>
         </div>
       </div>
