@@ -129,16 +129,7 @@ const PhotosSection = () => {
         </div>
 
         {/* Tip */}
-        <motion.p initial={{
-        opacity: 0
-      }} animate={isInView ? {
-        opacity: 1
-      } : {}} transition={{
-        delay: 0.8
-      }} className="text-center text-muted-foreground text-sm mt-8 flex items-center justify-center gap-2">
-          <ImageIcon className="w-4 h-4" />
-          Click on empty slots to upload your photos
-        </motion.p>
+        
       </div>
 
       {/* Lightbox modal */}
