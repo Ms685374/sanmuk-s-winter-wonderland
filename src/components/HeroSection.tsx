@@ -73,19 +73,7 @@ const HeroSection = () => {
           </motion.h1>
 
           {/* Floating 3D orb - positioned to overlap title */}
-          <motion.img src={christmasOrb} alt="Christmas Ornament" initial={{
-          opacity: 0,
-          scale: 0.5,
-          rotate: -20
-        }} animate={{
-          opacity: 1,
-          scale: 1,
-          rotate: 0
-        }} transition={{
-          duration: 1.5,
-          delay: 1,
-          type: 'spring'
-        }} className="absolute -right-10 md:right-10 lg:right-32 top-1/2 -translate-y-1/2 w-32 md:w-48 lg:w-64 animate-float-gentle glow-accent opacity-0" />
+          
         </div>
 
         {/* Subtitle */}
