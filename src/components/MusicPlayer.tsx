@@ -9,7 +9,7 @@ const MusicPlayer = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   // Christmas music URL (royalty-free)
-  const musicUrl = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
+  const musicUrl = 'https://soundcloud.com/dipayan-mondal-18458365/janam-janam-slowed-reverb-arijit-singh-dilwale?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing';
 
   useEffect(() => {
     if (audioRef.current) {
