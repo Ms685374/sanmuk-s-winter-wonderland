@@ -8,13 +8,13 @@ const MusicPlayer = () => {
   const [showPrompt, setShowPrompt] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  // Note: SoundCloud links don't work directly - need direct audio file URL
-  // Replace this with a direct MP3 link for actual playback
-  const musicUrl = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3';
+  // Janam Janam - Using a working direct MP3 URL
+  // Note: For best experience, host your own MP3 file
+  const musicUrl = 'https://pagalfree.com/musics/128-Janam%20Janam%20-%20Dilwale%20128%20Kbps.mp3';
 
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.volume = 0.3;
+      audioRef.current.volume = 0.4;
       audioRef.current.loop = true;
     }
   }, []);
@@ -24,7 +24,10 @@ const MusicPlayer = () => {
       if (isPlaying) {
         audioRef.current.pause();
       } else {
-        audioRef.current.play();
+        audioRef.current.play().catch(() => {
+          // Fallback if the URL doesn't work
+          console.log('Music playback failed - please check the URL');
+        });
       }
       setIsPlaying(!isPlaying);
       setShowPrompt(false);
