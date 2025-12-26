@@ -1,151 +1,184 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, ChevronDown } from 'lucide-react';
 import gradientBg from '@/assets/gradient-bg.jpg';
-import christmasOrb from '@/assets/christmas-orb.png';
-import couple3d from '@/assets/couple-3d.png';
-import glassHeart from '@/assets/glass-heart-3d.png';
+
 const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const {
-    scrollYProgress
-  } = useScroll({
+  const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end start']
   });
-  const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
+
+  const y = useTransform(scrollYProgress, [0, 1], [0, 300]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.9]);
-  return <section ref={containerRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Premium background */}
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.85]);
+
+  return (
+    <section 
+      ref={containerRef}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+    >
+      {/* Premium animated background */}
       <div className="absolute inset-0">
-        <img src={gradientBg} alt="" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/20 to-background" />
+        <motion.img 
+          src={gradientBg} 
+          alt="" 
+          className="w-full h-full object-cover"
+          style={{ y }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/10 via-transparent to-background" />
+        {/* Radial overlays */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary)/0.15)_0%,transparent_50%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,hsl(var(--accent)/0.15)_0%,transparent_50%)]" />
       </div>
 
-      {/* Floating orbs */}
-      <motion.div className="floating-orb w-96 h-96 bg-primary/20 top-20 -right-20" style={{
-      y
-    }} />
-      <motion.div className="floating-orb w-72 h-72 bg-accent/20 bottom-40 -left-20" style={{
-      y: useTransform(scrollYProgress, [0, 1], [0, -100])
-    }} />
+      {/* Floating glass orbs */}
+      <motion.div 
+        className="floating-orb w-[500px] h-[500px] bg-gradient-to-br from-primary/30 to-transparent top-0 -right-32"
+        style={{ y }}
+      />
+      <motion.div 
+        className="floating-orb w-96 h-96 bg-gradient-to-br from-accent/25 to-transparent bottom-20 -left-32"
+        style={{ y: useTransform(scrollYProgress, [0, 1], [0, -150]) }}
+      />
+      <motion.div 
+        className="floating-orb w-64 h-64 bg-gradient-to-br from-primary/20 to-accent/10 top-1/3 left-1/4"
+        animate={{ y: [0, -30, 0], x: [0, 20, 0] }}
+        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+      />
 
       {/* Main content */}
-      <motion.div className="relative z-10 text-center px-6 max-w-7xl mx-auto pt-32 pb-20" style={{
-      opacity,
-      scale
-    }}>
-        {/* Christmas badge */}
-        <motion.div initial={{
-        opacity: 0,
-        y: 30
-      }} animate={{
-        opacity: 1,
-        y: 0
-      }} transition={{
-        duration: 1,
-        delay: 0.3
-      }} className="mb-8">
-          <span className="section-subtitle inline-flex items-center gap-3">
-            <Sparkles className="w-4 h-4 text-accent" />
-            Christmas 2024
-            <Sparkles className="w-4 h-4 text-accent" />
-          </span>
+      <motion.div 
+        className="relative z-10 text-center px-6 max-w-7xl mx-auto pt-32 pb-20"
+        style={{ opacity, scale }}
+      >
+        {/* Christmas badge with glass effect */}
+        <motion.div
+          initial={{ opacity: 0, y: 30, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 1, delay: 0.3 }}
+          className="mb-10"
+        >
+          <div className="inline-flex items-center gap-3 glass-morphism px-6 py-3 rounded-full">
+            <Sparkles className="w-4 h-4 text-accent animate-pulse" />
+            <span className="text-sm uppercase tracking-[0.25em] font-medium text-foreground">
+              Christmas 2024
+            </span>
+            <Sparkles className="w-4 h-4 text-accent animate-pulse" />
+          </div>
         </motion.div>
 
-        {/* Main title with 3D element */}
-        <div className="relative mb-8">
-          <motion.h1 initial={{
-          opacity: 0,
-          y: 50
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 1.2,
-          delay: 0.5,
-          ease: [0.22, 1, 0.36, 1]
-        }} className="hero-title">
-            <span className="text-foreground">SANMUK</span>
-            <br />
-            <span className="hero-title-accent">PARADISE</span>
+        {/* Main title - Massive & Bold */}
+        <div className="relative mb-12">
+          <motion.h1
+            initial={{ opacity: 0, y: 60 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="hero-title"
+          >
+            <motion.span 
+              className="block text-foreground"
+              animate={{ opacity: [0.9, 1, 0.9] }}
+              transition={{ duration: 3, repeat: Infinity }}
+            >
+              SANMUK
+            </motion.span>
+            <motion.span 
+              className="block hero-title-accent"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, delay: 0.8 }}
+            >
+              PARADISE
+            </motion.span>
           </motion.h1>
 
-          {/* Floating 3D orb - positioned to overlap title */}
-          
+          {/* Decorative line */}
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 1, delay: 1.2 }}
+            className="absolute left-1/2 -translate-x-1/2 bottom-0 w-32 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent"
+          />
         </div>
 
-        {/* Subtitle */}
-        <motion.p initial={{
-        opacity: 0,
-        y: 30
-      }} animate={{
-        opacity: 1,
-        y: 0
-      }} transition={{
-        duration: 1,
-        delay: 0.8
-      }} className="text-lg md:text-xl max-w-lg mx-auto mb-16 font-light text-rose-50">
-          A love story between 
-          <span className="font-medium text-yellow-300"> Zubi </span>
-          & 
-          <span className="font-medium text-yellow-300"> Zuro</span>
-        </motion.p>
+        {/* Subtitle with glass pill */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 1 }}
+          className="mb-16"
+        >
+          <div className="inline-flex items-center gap-4 glass-morphism px-8 py-4 rounded-full">
+            <span className="text-lg md:text-xl font-light text-foreground">
+              A love story between
+            </span>
+            <span className="font-display text-xl md:text-2xl font-semibold text-primary">Zubi</span>
+            <span className="text-muted-foreground">&</span>
+            <span className="font-display text-xl md:text-2xl font-semibold text-primary">Zuro</span>
+          </div>
+        </motion.div>
 
-        {/* 3D Couple + Glass Heart composition */}
-        <motion.div initial={{
-        opacity: 0,
-        y: 60
-      }} animate={{
-        opacity: 1,
-        y: 0
-      }} transition={{
-        duration: 1.2,
-        delay: 1
-      }} className="relative inline-block">
-          {/* Glass heart behind couple */}
-          <motion.img src={glassHeart} alt="Crystal Heart" animate={{
-          scale: [1, 1.05, 1],
-          rotate: [0, 5, 0]
-        }} transition={{
-          duration: 6,
-          repeat: Infinity,
-          ease: 'easeInOut'
-        }} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[140%] blur-sm opacity-0" />
+        {/* Hero image with enhanced glass frame */}
+        <motion.div
+          initial={{ opacity: 0, y: 80, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 1.2, delay: 1.2, type: 'spring' }}
+          className="relative inline-block"
+        >
+          {/* Glass frame */}
+          <div className="glass-morphism p-3 md:p-4 rounded-[2rem] md:rounded-[2.5rem] animate-glow-pulse">
+            <motion.img
+              alt="Zubi & Zuro"
+              animate={{ y: [0, -10, 0] }}
+              transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+              src="/lovable-uploads/227301d6-3d8a-443d-a520-57a6e0010fd1.png"
+              className="relative z-10 w-56 md:w-72 lg:w-80 rounded-[1.5rem] md:rounded-[2rem] shadow-2xl"
+            />
+          </div>
+
+          {/* Floating decorative elements */}
+          <motion.div
+            className="absolute -top-6 -right-6 glass-morphism px-4 py-2 rounded-full"
+            animate={{ y: [0, -8, 0], rotate: [0, 5, 0] }}
+            transition={{ duration: 4, repeat: Infinity, delay: 0.5 }}
+          >
+            <span className="text-sm font-medium">💕 Forever</span>
+          </motion.div>
           
-          {/* Main couple image */}
-          <motion.img alt="Zubi & Zuro" animate={{
-          y: [0, -15, 0]
-        }} transition={{
-          duration: 4,
-          repeat: Infinity,
-          ease: 'easeInOut'
-        }} src="/lovable-uploads/227301d6-3d8a-443d-a520-57a6e0010fd1.png" className="relative z-10 w-64 md:w-80 lg:w-96 drop-shadow-2xl mx-auto border-rose-300 shadow rounded-4xl opacity-100" />
-
-          {/* Glow effect */}
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-64 h-32 bg-primary/20 rounded-full blur-3xl" />
+          <motion.div
+            className="absolute -bottom-4 -left-6 glass-morphism px-4 py-2 rounded-full"
+            animate={{ y: [0, -8, 0], rotate: [0, -5, 0] }}
+            transition={{ duration: 4, repeat: Infinity }}
+          >
+            <span className="text-sm font-medium">✨ Always</span>
+          </motion.div>
         </motion.div>
 
         {/* Scroll indicator */}
-        <motion.div initial={{
-        opacity: 0
-      }} animate={{
-        opacity: 1
-      }} transition={{
-        delay: 2.5
-      }} className="absolute bottom-10 left-1/2 -translate-x-1/2">
-          <motion.div animate={{
-          y: [0, 8, 0]
-        }} transition={{
-          duration: 2,
-          repeat: Infinity
-        }} className="items-center gap-2 text-muted-foreground flex flex-row">
-            <span className="text-xs uppercase tracking-widest">Scroll</span>
-            <div className="w-px h-12 bg-gradient-to-b from-muted-foreground to-transparent opacity-0" />
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2.5 }}
+          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        >
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="flex flex-col items-center gap-2"
+          >
+            <span className="text-xs uppercase tracking-[0.2em] text-muted-foreground font-medium">
+              Scroll to explore
+            </span>
+            <div className="w-10 h-10 rounded-full glass-morphism flex items-center justify-center">
+              <ChevronDown className="w-5 h-5 text-muted-foreground" />
+            </div>
           </motion.div>
         </motion.div>
       </motion.div>
-    </section>;
+    </section>
+  );
 };
+
 export default HeroSection;
